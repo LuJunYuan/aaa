@@ -1,5 +1,57 @@
 <template>
   <div>
+     <div>
+    <!-- 1.0 轮播图 -->
+    <swiper indicator-dots autoplay circular>
+        <block v-for="item in swiperdata" :key="item.id">
+          <navigator :url="item.navigator_url">
+            <swiper-item>
+                <image mode="aspectFill" :src="item.image_src"></image>
+            </swiper-item>
+          </navigator>
+        </block>
+    </swiper>
+    <!-- 2.0 菜单 -->
+    <div class="categories">
+      <div v-for="item in catitems" :key="item.id" class="category-item ">
+        <image :src="item.image_src"/>
+      </div>
+    </div>
+    <!-- 3.0 楼层数据 -->
+    <div>
+      <div v-for="(item,index) in floordata" :key="index" class="floor">
+        <!-- 头部 -->
+        <div class="floor-head">
+          <image :src="item.floor_title.image_src"/>
+        </div>
+        <!-- body -->
+        <div class="floor-body">
+          <!-- 左边 -->
+          <div class="floor-body-left">
+            <image :src="item.product_list[0].image_src"/>
+          </div>
+          <!-- 右边 -->
+          <div class="floor-body-right">
+            <div v-if="index2 > 0" :style="{width:subitem.image_width+'rpx'}" v-for="(subitem,index2) in item.product_list" :key="index2" class="floor-body-right-img">
+              <image style="width:100%;height:100%;" :src="subitem.image_src"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 4.0 到底提示 -->
+    <div class="end-tips">
+      <i class="iconfont icon-xiao"/>
+      <span class="bottomline">我是有底线的哦~</span>
+    </div>
+    <!-- 5.0 回到顶部 -->
+    <div v-show="isShowGoToTop">
+      <div @click="goToTop" class="to-top">
+        <image src="/static/img/arrow_top@2x.png"/>
+        <text>顶部</text>
+      </div>
+    </div>
+  </div>
     <div v-if="loginState == 'new' && !isRegister" class="accreditBox txtC font_12">
       <p><img src="/static/images/wxIcon.png" alt=""></p>
       <p class="title gray">银通融征信风控管理中心</p>
